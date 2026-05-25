@@ -16,12 +16,10 @@ PM2 process:
 
 ```bash
 cd /home/dev_ssh/cpcadvertising
-git fetch origin main
-git reset --hard origin/main
+git pull --ff-only origin main
 npm install
 npm run build
-pm2 delete cpcadvertising-app 2>/dev/null || true
-pm2 start npm --name cpcadvertising-app -- start
+pm2 restart cpcadvertising-app --update-env || pm2 start npm --name cpcadvertising-app -- start
 pm2 save
 ```
 
