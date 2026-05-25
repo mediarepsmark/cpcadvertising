@@ -59,6 +59,8 @@ Add these GitHub repository secrets:
 - `SSH_PASSWORD`
 - `SSH_PORT`
 
+See [GitHub setup](docs/GITHUB_SETUP.md) and [Mojohost deployment runbook](docs/MOJOHOST_DEPLOYMENT.md) for the full production workflow.
+
 ## API routes
 
 - `POST /api/traffichaus/create-campaign`
