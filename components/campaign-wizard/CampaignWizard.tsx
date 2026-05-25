@@ -229,7 +229,7 @@ export function CampaignWizard() {
             >
               <Image
                 alt="CPCAdvertising.com"
-                className="h-12 w-auto rounded-md object-contain"
+                className="h-16 w-auto rounded-md object-contain"
                 height={298}
                 priority
                 src="/brand/cpcadvertising-logo-header.png"
