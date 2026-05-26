@@ -327,7 +327,7 @@ export function CampaignWizard() {
             <span className="block">campaign generation tool</span>
           </h1>
           <p className="mt-6 max-w-3xl text-2xl font-light leading-tight text-white/60 sm:text-4xl">
-            <span className="text-[#3b71ff]">where</span> a product URL becomes ads, targeting, and paid clicks
+            <span className="text-[#3b71ff]">where</span> a product URL becomes ads, budgets, partner routing, and paid clicks
           </p>
 
           <button
@@ -355,7 +355,7 @@ export function CampaignWizard() {
               <textarea
                 className="min-h-10 flex-1 resize-none bg-transparent py-2 text-lg leading-7 outline-none placeholder:text-slate-400 sm:min-h-12"
                 value={prompt}
-                placeholder="Paste a product URL and tell us restrictions, max CPC, and approval preference..."
+                placeholder="Paste a product URL, optional creative URL, restrictions, max CPC, and approval preference..."
                 onChange={(event) => setPrompt(event.target.value)}
               />
               <button
@@ -491,7 +491,7 @@ export function CampaignWizard() {
                 </div>
               </div>
               <p className="mt-3 text-sm leading-6 text-muted">
-                API keys stay in Next.js route handlers. The browser only sends the draft campaign.
+                Ad-network and LLM keys stay in Next.js route handlers. The browser only sends the campaign brief.
               </p>
             </section>
 

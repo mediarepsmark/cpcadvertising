@@ -40,6 +40,11 @@ const partnerLabels: Record<CampaignDraft["partnerChannels"][number], string> = 
   traffichaus: "TrafficHaus"
 };
 
+const parseMoney = (value: string) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+};
+
 export function ReviewLaunchStep({
   draft,
   isLaunching,
@@ -59,6 +64,10 @@ export function ReviewLaunchStep({
   }>({ status: "idle", message: "No stats loaded." });
 
   const payloadJson = useMemo(() => JSON.stringify(payload, null, 2), [payload]);
+  const estimatedClicks =
+    draft.bidType === "cpc" && parseMoney(draft.bidAmount)
+      ? Math.floor(parseMoney(draft.totalBudget) / parseMoney(draft.bidAmount))
+      : 0;
 
   const copyPayload = async () => {
     await navigator.clipboard.writeText(payloadJson);
@@ -177,6 +186,8 @@ export function ReviewLaunchStep({
           <InfoTile label="Product URL" value={draft.landingPageUrl || "Missing"} />
           <InfoTile label="Product" value={draft.productName || "Missing"} />
           <InfoTile label="Max CPC" value={`$${draft.bidAmount || "0"}`} />
+          <InfoTile label="Estimated clicks" value={estimatedClicks ? estimatedClicks.toLocaleString() : "CPM mode"} />
+          <InfoTile label="AI generation cost" value="Preview pass-through" />
           <InfoTile
             label="Approval"
             value={draft.customerApprovalMode === "review_first" ? "Review ads first" : "Run for clicks"}

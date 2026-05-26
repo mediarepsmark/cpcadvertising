@@ -4,14 +4,19 @@ import { CheckCircle2 } from "lucide-react";
 
 import type { CampaignStepProps, PartnerChannel } from "@/types/campaign";
 
-const partnerOptions: Array<{ id: PartnerChannel; label: string; copy: string }> = [
-  { id: "google", label: "Google", copy: "Search and display intent." },
-  { id: "instagram", label: "Instagram", copy: "Visual social discovery." },
-  { id: "snapchat", label: "Snapchat", copy: "Mobile-first attention." },
-  { id: "outbrain", label: "Outbrain", copy: "Native content clicks." },
-  { id: "taboola", label: "Taboola", copy: "Recommendation traffic." },
-  { id: "nativo", label: "Nativo", copy: "Publisher native ads." },
-  { id: "traffichaus", label: "TrafficHaus", copy: "Connected launch partner." }
+const partnerOptions: Array<{
+  id: PartnerChannel;
+  label: string;
+  copy: string;
+  status: "connected" | "api-ready" | "planned";
+}> = [
+  { id: "google", label: "Google", copy: "Search and display intent.", status: "api-ready" },
+  { id: "instagram", label: "Instagram", copy: "Meta/Instagram creative distribution.", status: "api-ready" },
+  { id: "snapchat", label: "Snapchat", copy: "Mobile-first attention and discovery.", status: "api-ready" },
+  { id: "outbrain", label: "Outbrain", copy: "Native content recommendation clicks.", status: "planned" },
+  { id: "taboola", label: "Taboola", copy: "Recommendation traffic across publishers.", status: "planned" },
+  { id: "nativo", label: "Nativo", copy: "Publisher-native ad placements.", status: "planned" },
+  { id: "traffichaus", label: "TrafficHaus", copy: "Connected launch partner.", status: "connected" }
 ];
 
 // TODO: Confirm exact TrafficHaus enum values from the advertiser account UI.
@@ -36,6 +41,10 @@ export function AdFormatStep({ draft, updateDraft }: CampaignStepProps) {
         <div className="flex flex-col gap-1">
           <p className="text-xs font-extrabold uppercase text-brand-green">Partner routing</p>
           <h3 className="text-lg font-extrabold">Choose where CPCAdvertising.com should buy the clicks.</h3>
+          <p className="text-sm leading-6 text-muted">
+            Partner APIs stay server-side. TrafficHaus is connected now; other networks are kept in the routing
+            plan so their API connectors can be enabled without changing the advertiser setup flow.
+          </p>
         </div>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {partnerOptions.map((partner) => {
@@ -57,6 +66,22 @@ export function AdFormatStep({ draft, updateDraft }: CampaignStepProps) {
                   {selected ? <CheckCircle2 className="h-5 w-5 text-brand-blue" /> : null}
                 </span>
                 <span className="mt-2 block text-sm leading-6 text-muted">{partner.copy}</span>
+                <span
+                  className={[
+                    "mt-3 inline-flex rounded-full px-2.5 py-1 text-xs font-extrabold uppercase",
+                    partner.status === "connected"
+                      ? "bg-emerald-100 text-emerald-800"
+                      : partner.status === "api-ready"
+                        ? "bg-[#eef6ff] text-brand-blue"
+                        : "bg-slate-100 text-slate-600"
+                  ].join(" ")}
+                >
+                  {partner.status === "connected"
+                    ? "Connected"
+                    : partner.status === "api-ready"
+                      ? "API ready"
+                      : "Connector planned"}
+                </span>
               </button>
             );
           })}

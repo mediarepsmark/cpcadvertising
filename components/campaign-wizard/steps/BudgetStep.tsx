@@ -5,7 +5,26 @@ import type { CampaignStepProps } from "@/types/campaign";
 // TODO: Confirm exact TrafficHaus enum values from the advertiser account UI.
 const bidTypeOptions = ["cpm", "cpc"];
 
+const parseMoney = (value: string) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+};
+
+const formatMoney = (value: number) =>
+  new Intl.NumberFormat("en-US", {
+    currency: "USD",
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+    style: "currency"
+  }).format(value);
+
 export function BudgetStep({ draft, updateDraft }: CampaignStepProps) {
+  const bidAmount = parseMoney(draft.bidAmount);
+  const dailyBudget = parseMoney(draft.dailyBudget);
+  const totalBudget = parseMoney(draft.totalBudget);
+  const estimatedDailyClicks = draft.bidType === "cpc" && bidAmount ? Math.floor(dailyBudget / bidAmount) : 0;
+  const estimatedTotalClicks = draft.bidType === "cpc" && bidAmount ? Math.floor(totalBudget / bidAmount) : 0;
+
   return (
     <div className="grid gap-5">
       <section className="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
@@ -15,6 +34,23 @@ export function BudgetStep({ draft, updateDraft }: CampaignStepProps) {
           CPCAdvertising.com generates and runs the ads, then optimizes partner placements around the amount
           the customer is willing to pay for each click.
         </p>
+      </section>
+
+      <section className="rounded-lg border border-line bg-white p-4">
+        <p className="text-xs font-extrabold uppercase text-brand-green">Cost transparency</p>
+        <div className="mt-3 grid gap-3 sm:grid-cols-3">
+          <CostTile label="Media budget" value={formatMoney(totalBudget)} detail="Used to buy clicks." />
+          <CostTile
+            label="Estimated clicks"
+            value={draft.bidType === "cpc" ? estimatedTotalClicks.toLocaleString() : "CPM mode"}
+            detail={draft.bidType === "cpc" ? `${estimatedDailyClicks.toLocaleString()} per day at max CPC` : "Clicks vary by CTR."}
+          />
+          <CostTile
+            label="AI generation cost"
+            value="Preview"
+            detail="Future LLM costs will be passed through before launch."
+          />
+        </div>
       </section>
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -52,6 +88,16 @@ export function BudgetStep({ draft, updateDraft }: CampaignStepProps) {
           onChange={(value) => updateDraft({ totalBudget: value })}
         />
       </div>
+    </div>
+  );
+}
+
+function CostTile({ detail, label, value }: { detail: string; label: string; value: string }) {
+  return (
+    <div className="rounded-lg bg-slate-50 p-3">
+      <span className="block text-xs font-extrabold uppercase text-muted">{label}</span>
+      <strong className="mt-1 block text-lg text-ink">{value}</strong>
+      <span className="mt-1 block text-sm leading-5 text-muted">{detail}</span>
     </div>
   );
 }

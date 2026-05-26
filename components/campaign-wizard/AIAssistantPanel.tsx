@@ -58,7 +58,7 @@ export function AIAssistantPanel({ draft, updateDraft }: CampaignStepProps) {
             Sharpen creative
           </span>
           <span className="mt-2 block text-sm leading-6 text-muted">
-            Generate CPCAdvertising-owned ad copy for the product URL.
+            Generate ad copy and design direction from the product URL and creative brief.
           </span>
         </button>
 
@@ -72,7 +72,7 @@ export function AIAssistantPanel({ draft, updateDraft }: CampaignStepProps) {
             Reset launch budget
           </span>
           <span className="mt-2 block text-sm leading-6 text-muted">
-            Max CPC, daily click budget, total click budget, and frequency cap for a first test.
+            Max CPC, expected click volume, media budget, and future AI pass-through visibility.
           </span>
         </button>
       </div>
