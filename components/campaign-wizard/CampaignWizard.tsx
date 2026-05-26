@@ -284,7 +284,7 @@ export function CampaignWizard() {
         <header className="relative z-10 border-b border-white/10 bg-black/70 px-4 py-5 shadow-[0_18px_60px_rgba(0,0,0,0.65)] backdrop-blur sm:px-6">
           <div className="mx-auto flex max-w-6xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <a
-              className="inline-flex min-w-0 items-center gap-4 rounded-lg border border-white/15 bg-[#030808] px-4 py-3 shadow-[0_0_46px_rgba(115,221,255,0.22)] transition hover:border-white/25 sm:gap-5 sm:px-5"
+              className="inline-flex min-w-0 items-center gap-4 rounded-lg border border-white/15 bg-[#030808] px-4 py-3 shadow-[0_0_46px_rgba(59,113,255,0.28)] transition hover:border-white/25 sm:gap-5 sm:px-5"
               href="/campaigns/new"
               aria-label="CPCAdvertising.com"
             >
@@ -299,7 +299,7 @@ export function CampaignWizard() {
               <span className="min-w-0">
                 <span className="block truncate text-3xl font-black tracking-normal sm:text-5xl lg:text-6xl">
                   <span className="text-white">CPC</span>
-                  <span className="text-[#73ddff]">advertising</span>
+                  <span className="text-[#3b71ff]">advertising</span>
                   <span className="text-white/65">.com</span>
                 </span>
                 <span className="mt-1 hidden text-sm font-extrabold uppercase tracking-normal text-[#7ff083] sm:block">
@@ -310,7 +310,7 @@ export function CampaignWizard() {
 
             <div className="hidden items-center gap-2 md:flex">
               <Badge className="gap-2 bg-white/10 text-white ring-1 ring-white/15">
-                <Globe2 className="h-4 w-4 text-[#73ddff]" />
+                <Globe2 className="h-4 w-4 text-[#3b71ff]" />
                 Partner routing
               </Badge>
               <Badge className={validation.valid ? "bg-[#7ff083] text-black" : "bg-white/10 text-white"}>
@@ -351,7 +351,7 @@ export function CampaignWizard() {
       </section>
 
       <div className="relative z-10 mx-auto -mt-28 max-w-6xl px-4 sm:px-6">
-        <section className="rounded-lg bg-gradient-to-r from-[#7ff083] via-[#73ddff] to-[#3b71ff] p-[3px] shadow-[0_22px_80px_rgba(0,0,0,0.28)]">
+        <section className="rounded-lg bg-gradient-to-r from-[#7ff083] via-[#3b71ff] to-[#3b71ff] p-[3px] shadow-[0_22px_80px_rgba(0,0,0,0.28)]">
           <div className="rounded-lg bg-white p-4">
             <div className="flex items-start gap-3 rounded-lg border border-slate-200 px-3 py-3 sm:items-center">
               <button
