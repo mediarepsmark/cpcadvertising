@@ -284,18 +284,28 @@ export function CampaignWizard() {
         <header className="relative z-10 px-4 py-4 sm:px-6">
           <div className="mx-auto flex max-w-6xl items-center justify-between gap-4">
             <a
-              className="inline-flex rounded-lg border border-white/15 bg-white p-1 shadow-[0_0_24px_rgba(115,221,255,0.16)]"
+              className="inline-flex min-w-0 items-center gap-3 rounded-lg border border-white/10 bg-black/85 px-3 py-2 shadow-[0_0_32px_rgba(115,221,255,0.18)] backdrop-blur transition hover:border-white/20 sm:gap-4 sm:px-4 sm:py-3"
               href="/campaigns/new"
               aria-label="CPCAdvertising.com"
             >
               <Image
-                alt="CPCAdvertising.com"
-                className="h-16 w-auto rounded-md object-contain"
-                height={298}
+                alt=""
+                className="h-16 w-16 shrink-0 rounded-lg object-cover shadow-[0_0_24px_rgba(59,113,255,0.22)] sm:h-20 sm:w-20 lg:h-24 lg:w-24"
+                height={512}
                 priority
-                src="/brand/cpcadvertising-logo-header.png"
-                width={640}
+                src="/brand/cpcadvertising-favicon.png"
+                width={512}
               />
+              <span className="min-w-0">
+                <span className="block truncate text-2xl font-black tracking-normal sm:text-4xl lg:text-5xl">
+                  <span className="text-white">CPC</span>
+                  <span className="text-[#73ddff]">advertising</span>
+                  <span className="text-white/65">.com</span>
+                </span>
+                <span className="mt-1 hidden text-xs font-extrabold uppercase tracking-normal text-[#7ff083] sm:block">
+                  AI click campaign platform
+                </span>
+              </span>
             </a>
 
             <div className="hidden items-center gap-2 md:flex">
