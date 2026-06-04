@@ -1,3 +1,4 @@
+import { MAX_DAILY_BUDGET, parseBudgetAmount } from "@/lib/budgetPolicy";
 import type { CampaignDraft, TrafficHausPayload, ValidationResult } from "@/types/campaign";
 
 export const defaultCampaignDraft: CampaignDraft = {
@@ -109,6 +110,16 @@ export const validateTrafficHausPayload = (payload: TrafficHausPayload): Validat
   requireField(payload.site_targeting, "Site targeting");
   requireField(payload.bid_type, "Bid type");
   requireField(payload.bid_amount, "Bid amount");
+  requireField(payload.daily_budget, "Daily budget");
+
+  if (payload.daily_budget) {
+    const dailyBudget = parseBudgetAmount(payload.daily_budget);
+    if (!dailyBudget) {
+      errors.push("Daily budget must be greater than $0.");
+    } else if (dailyBudget > MAX_DAILY_BUDGET) {
+      errors.push(`Daily budget cannot exceed $${MAX_DAILY_BUDGET}.`);
+    }
+  }
 
   if (!payload.creative) {
     errors.push("Creative is required.");

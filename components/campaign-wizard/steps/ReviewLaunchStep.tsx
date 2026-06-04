@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { BarChart3, CheckCircle2, Clipboard, Rocket, TriangleAlert } from "lucide-react";
 
+import { parseBudgetAmount } from "@/lib/budgetPolicy";
 import type {
   CampaignDraft,
   CampaignStepProps,
@@ -40,11 +41,6 @@ const partnerLabels: Record<CampaignDraft["partnerChannels"][number], string> = 
   traffichaus: "TrafficHaus"
 };
 
-const parseMoney = (value: string) => {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
-};
-
 export function ReviewLaunchStep({
   draft,
   isLaunching,
@@ -65,8 +61,8 @@ export function ReviewLaunchStep({
 
   const payloadJson = useMemo(() => JSON.stringify(payload, null, 2), [payload]);
   const estimatedClicks =
-    draft.bidType === "cpc" && parseMoney(draft.bidAmount)
-      ? Math.floor(parseMoney(draft.totalBudget) / parseMoney(draft.bidAmount))
+    draft.bidType === "cpc" && parseBudgetAmount(draft.bidAmount)
+      ? Math.floor(parseBudgetAmount(draft.totalBudget) / parseBudgetAmount(draft.bidAmount))
       : 0;
 
   const copyPayload = async () => {

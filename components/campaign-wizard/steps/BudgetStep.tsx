@@ -1,14 +1,10 @@
 "use client";
 
+import { MAX_DAILY_BUDGET, parseBudgetAmount } from "@/lib/budgetPolicy";
 import type { CampaignStepProps } from "@/types/campaign";
 
 // TODO: Confirm exact TrafficHaus enum values from the advertiser account UI.
 const bidTypeOptions = ["cpm", "cpc"];
-
-const parseMoney = (value: string) => {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
-};
 
 const formatMoney = (value: number) =>
   new Intl.NumberFormat("en-US", {
@@ -19,9 +15,9 @@ const formatMoney = (value: number) =>
   }).format(value);
 
 export function BudgetStep({ draft, updateDraft }: CampaignStepProps) {
-  const bidAmount = parseMoney(draft.bidAmount);
-  const dailyBudget = parseMoney(draft.dailyBudget);
-  const totalBudget = parseMoney(draft.totalBudget);
+  const bidAmount = parseBudgetAmount(draft.bidAmount);
+  const dailyBudget = parseBudgetAmount(draft.dailyBudget);
+  const totalBudget = parseBudgetAmount(draft.totalBudget);
   const estimatedDailyClicks = draft.bidType === "cpc" && bidAmount ? Math.floor(dailyBudget / bidAmount) : 0;
   const estimatedTotalClicks = draft.bidType === "cpc" && bidAmount ? Math.floor(totalBudget / bidAmount) : 0;
 
@@ -79,6 +75,8 @@ export function BudgetStep({ draft, updateDraft }: CampaignStepProps) {
       <div className="grid gap-4 sm:grid-cols-2">
         <CurrencyField
           label="Daily click budget"
+          max={MAX_DAILY_BUDGET}
+          note={`Hard cap: ${formatMoney(MAX_DAILY_BUDGET)} per day.`}
           value={draft.dailyBudget}
           onChange={(value) => updateDraft({ dailyBudget: value })}
         />
@@ -104,10 +102,14 @@ function CostTile({ detail, label, value }: { detail: string; label: string; val
 
 function CurrencyField({
   label,
+  max,
+  note,
   onChange,
   value
 }: {
   label: string;
+  max?: number;
+  note?: string;
   onChange: (value: string) => void;
   value: string;
 }) {
@@ -117,11 +119,13 @@ function CurrencyField({
       <input
         className="min-h-11 rounded-lg border border-line bg-white px-3 outline-none focus:border-brand-green focus:ring-4 focus:ring-emerald-100"
         min="0"
+        max={max}
         step="0.01"
         type="number"
         value={value}
         onChange={(event) => onChange(event.target.value)}
       />
+      {note ? <span className="text-sm leading-5 text-muted">{note}</span> : null}
     </label>
   );
 }
